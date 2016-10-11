@@ -11,33 +11,36 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-// // below, will only work with defined $name
-// Route::get('/sayhello/{name}', function ($name) {
-// 	return 'Hello ' . $name;
-// });
-// // below, will work with no $name. Defaulted to 'Lassen'
-// Route::get('/sayhello/{name?}', function ($name = 'Lassen') {
-// 	return 'Hello ' . $name;
-// });
-// // below, will redirect anyone named "Chris" to home page
-// Route::get('/sayhello/{name}', function ($name) {
-// 	if ($name == "Chris") {
-// 		return redirect('/');
-// 	}
-// 	return 'Hello ' . $name;
-// });
-
+// *********************** UPPERCASE ************************************************
 Route::get('/uppercase/{word}', function ($word) {
-	return strtoupper($word);
+	$data['word'] = $word;
+	$data['upperCaseString'] = strtoupper($word);
+	return view('uppercase')->with($data);
 });
 
+// *********************** INCREMENT ************************************************
 Route::get('/increment/{number}', function($number) {
-	return ($number + 1);
+	$data['number'] = $number;
+	$data['incremented'] = $number + 1;
+	return view('increment')->with($data);
 });
 
+// ***********************  ************************************************
 Route::get('/add/{a?}/{b?}', function($a = 2, $b = 2) {
 	return ($a + $b);
 });
+
+// *********************** MY-FIRST-VIEW ************************************************
+Route::get('/sayhello/{name}', function($name)
+{
+    return view('my-first-view');
+});
+
+// *********************** ROLL-DICE ************************************************
+Route::get('/rolldice/{guess?}', function($guess = 1) {
+	$data['dice_roll'] = mt_rand(1, 6);
+	$data['guess'] = $guess;
+	$data['correct'] = $data["dice_roll"] == $data["guess"];
+	return view('roll-dice')->with($data);
+});
+
