@@ -1,8 +1,7 @@
 @extends('layouts.master')
 
-@section('top-script')
-	<title>Roll Dice</title>
-@stop
+@section('title', 'Roll Dice')
+
 
 @section('content')
 	<h1>Roll Dice Game</h1>

@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Reddit</title>
+	<meta charset="UTF-8">
+    <title>@yield('title')</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-    @yield('content')
+	@include('partials.navbar')
+	<div class="container">
+    	@yield('content')
+    </div>
+    @include('partials.footer')
 </body>
 </html>

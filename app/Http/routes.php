@@ -36,3 +36,7 @@ get('/increment/{number}', 'HomeController@increment');
 // });
 
 get('/rolldice/{guess}', 'HomeController@rollDice');
+
+// ***********************  ************************************************
+
+Route::resource('posts', 'PostsController');
