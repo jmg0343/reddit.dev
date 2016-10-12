@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Post;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -40,3 +42,28 @@ get('/rolldice/{guess}', 'HomeController@rollDice');
 // ***********************  ************************************************
 
 Route::resource('posts', 'PostsController');
+
+
+Route::get('orm-test', function ()
+{
+	$post1 = new \App\Models\Post();
+	$post1->title = 'Eloquent is awesome!';
+	$post1->url='https://laravel.com/docs/5.1/eloquent';
+	$post1->content  = 'It is super easy to create a new post.';
+	$post1->created_by = 1;
+	$post1->save();
+	
+	$post1 = new \App\Models\Post();
+	$post1->title = 'Eloquent is really easy!';
+	$post1->url='https://laravel.com/docs/5.1/eloquent';
+	$post1->content = 'It is super easy to create a new post.';
+	$post1->created_by = 1;
+	$post1->save();
+
+	// $posts = \App\Models\Post::all();
+	// return $posts;
+});
+
+
+
+

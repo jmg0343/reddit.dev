@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -17,7 +18,9 @@ class PostsController extends Controller
     public function index()
     {
         //
-       return 'Return all the posts';
+        // dd(Post::all());
+        $data['posts'] = Post::all();
+        return view('posts.index')->with($data);
     }
 
     /**
@@ -28,6 +31,7 @@ class PostsController extends Controller
     public function create()
     {
         //
+        return view('posts.create');
     }
 
     /**
@@ -38,7 +42,15 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return back()->withInput();
+       $post = new Post;
+       $post->created_by = 1;
+       $post->title = $request->get('title');
+       $post->url = $request->get('url');
+       $post->content = $request->get('content');
+       $post->save();
+
+        return redirect()->action('PostsController@index');
     }
 
     /**
@@ -49,7 +61,9 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        $data = ['post' => $post];
+        return view('posts.show')->with($data);
     }
 
     /**
@@ -60,7 +74,9 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        $data = ['post' => $post];
+        return view('posts.edit')->with($data);
     }
 
     /**
@@ -72,7 +88,13 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+        $post->title = $request->title;        
+        $post->url = $request->url;        
+        $post->content = $request->content;
+        $post->save();
+
+        return redirect()->action('PostsController@show', $post->id);       
     }
 
     /**
@@ -84,5 +106,6 @@ class PostsController extends Controller
     public function destroy($id)
     {
         //
+        return 'Delete a specific post';
     }
 }
