@@ -5,8 +5,8 @@
 		{!! csrf_field() !!}
 		{!! method_field('PUT') !!}
 		Title: <input class="form-control" type="text" name="title" value="{{ (old('title') == null) ? $post->title : old('title') }} ">
-		Content: <textarea class="form-control" name="content" rows="5" cols="40" > {{ (old('title') == null) ? $post->title : old('title') }} </textarea>
-		URL: <input class="form-control" type="text" name="url" value="{{ (old('title') == null) ? $post->title : old('title') }}">
+		Content: <textarea class="form-control" name="content" rows="5" cols="40" > {{ (old('content') == null) ? $post->content : old('content') }} </textarea>
+		URL: <input class="form-control" type="text" name="url" value="{{ (old('url') == null) ? $post->url : old('url') }}">
 		<input class="btn-success btn" type="submit">
 	</form>
 @stop

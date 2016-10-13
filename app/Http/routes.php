@@ -39,7 +39,7 @@ get('/increment/{number}', 'HomeController@increment');
 
 get('/rolldice/{guess}', 'HomeController@rollDice');
 
-// ***********************  ************************************************
+// ****************** POSTS CONTROLLER ************************************************
 
 Route::resource('posts', 'PostsController');
 
@@ -60,9 +60,16 @@ Route::get('orm-test', function ()
 	$post1->created_by = 1;
 	$post1->save();
 
-	// $posts = \App\Models\Post::all();
-	// return $posts;
+
+	$post = \App\Models\Post::find(1);
+	$post->delete();
 });
+
+// ****************** USERS CONTROLLER ************************************************
+
+Route::resource('user', 'UsersController');
+
+
 
 
 

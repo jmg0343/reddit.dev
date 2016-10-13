@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Post;
+use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class PostsController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
-        // dd(Post::all());
-        $data['posts'] = Post::paginate(10);
-        return view('posts.index')->with($data);
+        $data['users'] = User::all();
+        return view('users.index')->with($data);
     }
 
     /**
@@ -30,8 +28,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
-        return view('posts.create');
+        return view('users.create');
     }
 
     /**
@@ -42,26 +39,13 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-       
-        $rules = [
-            'title'   => 'required|min:5',
-            'url'     => 'required',
-            'content' => 'required',
-        ];
-        // will redirect back with $errors object populated if validation fails
-        $this->validate($request, $rules);
+        $user = new User;
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->password = $request->get('password');
+        $user->save();
 
-
-
-
-        $post = new Post;
-        $post->created_by = 1;
-        $post->title = $request->get('title');
-        $post->url = $request->get('url');
-        $post->content = $request->get('content');
-        $post->save();
-
-        return redirect()->action('PostsController@index');
+        return redirect()->action('UsersController@index');
     }
 
     /**
@@ -72,9 +56,9 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
-        $data = ['post' => $post];
-        return view('posts.show')->with($data);
+        $user = User::find($id);
+        $data = ['user' => $user];
+        return view('users.show')->with($data);
     }
 
     /**
@@ -85,9 +69,9 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id);
-        $data = ['post' => $post];
-        return view('posts.edit')->with($data);
+        $user = User::find($id);
+        $data = ['user' => $user];
+        return view('users.edit')->with($data);
     }
 
     /**
@@ -99,13 +83,13 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $post = Post::find($id);
-        $post->title = $request->title;        
-        $post->url = $request->url;        
-        $post->content = $request->content;
-        $post->save();
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->save();
 
-        return redirect()->action('PostsController@show', $post->id);       
+        return redirect()->action('UsersController@show', $post->id);
     }
 
     /**
@@ -116,9 +100,6 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($id);
-        $post->delete();
-
-        return redirect()->action('PostsController@index');
+        //
     }
 }
