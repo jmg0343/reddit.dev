@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+Use App\Models\Vote;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Http\Requests;
@@ -163,16 +164,30 @@ class PostsController extends Controller
 
     public function upVote(Request $request)
     {
-
-
         $vote = Vote::firstOrCreate(
                 array(
-                        'user_id' => Auth::user()->id,
-                        'post_id' => Post::find($id),
-                        'vote' => 1,
+                        'user_id' => $request->user()->id,
+                        'post_id' => $request->get('postId'),
                     )
             );
+        $vote->vote = 1;
         $vote->save();
+
+        return redirect()->action('PostsController@index');
+    }
+
+    public function downVote(Request $request)
+    {
+        $vote = Vote::firstOrCreate(
+                array(
+                        'user_id' => $request->user()->id,
+                        'post_id' => $request->get('postId'),
+                    )
+            );
+        $vote->vote = 0;
+        $vote->save();
+
+        return redirect()->action('PostsController@index');
     }
 
 }

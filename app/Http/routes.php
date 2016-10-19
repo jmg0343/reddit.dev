@@ -50,3 +50,6 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 
 // ****************** VOTES *************************************************************
+
+Route::post('posts/show', 'PostsController@upVote');
+Route::post('posts/show', 'PostsController@downVote');

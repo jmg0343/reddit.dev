@@ -10,7 +10,24 @@
 					<h4><td>{{$post->title}}</td></h4>
 					{{ $post->created_at->format('l, F jS Y @ h:i:s A') }}
 					<div>
-						<p>{{ $post->content }}</p>		
+						<p>{{ $post->content }}</p>	
+
+					<form method="POST" action="{{ action('PostsController@upVote') }}">
+						{!! csrf_field() !!}
+				        <div class="form-group">
+				          	<input type="hidden" name="postId" value="{{ $post->id }}">
+				        </div>
+				        <button type="submit" class="btn btn-default glyphicon glyphicon-thumbs-up"></button>
+					</form>	
+					
+					<form method="POST" action="{{ action('PostsController@downVote') }}">
+						{!! csrf_field() !!}
+				        <div class="form-group">
+				          	<input type="hidden" name="postId" value="{{ $post->id }}">
+				        </div>
+				        <button type="submit" class="btn btn-default glyphicon glyphicon-thumbs-down"></button>
+					</form>	
+
 					</div>
 				</div>
 				<div class="col-sm-6">
@@ -19,17 +36,5 @@
 		</div>
 	</div>
 </div>
-
-
-		{{-- 	<h1 class="pull-left">{{ $post->title }}</h1>
-			<p>{{ $post->content }}</p>
-			{{ $post->url }}
-			{{ $post->created_at->format('l, F jS Y @ h:i:s A') }}
-			{{ $post->updated_at->format('l, F jS Y @ h:i:s A') }}
-			{{ $post->user->name }} --}}
-		
-	
-	{{-- <button type="submit" class="btn-success btn"><a href="{{ $post->url }}">Website</a></button> --}}
-	
 	
 @stop

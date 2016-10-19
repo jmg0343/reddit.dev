@@ -19,17 +19,7 @@
 				</div>
 				<div class="col-sm-3">
 					<a href="{{ action('PostsController@show', $post->id) }}">See Post</a>
-					<p>{{ $post->created_at->diffForHumans() }}</p>
-
-					{{-- <form method="POST" action="{{ action('PostsController@upVote') }}">
-					{!! csrf_field() !!}
-			        <div class="form-group">
-			         	<input type="text" class="form-control" name="upVote">
-			          	<input type="hidden" name="userId" value="{{ Auth::user()->id }}">
-			        </div>
-			        <button type="submit" class="btn btn-default glyphicon glyphicon-thumbs-up">UpVote</button>
-					</form>	 --}}	
-					{{-- <p><a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></p> --}}
+					<p>{{ $post->created_at->diffForHumans() }}</p>							
 				</div>
 			</tr>
 		</div>

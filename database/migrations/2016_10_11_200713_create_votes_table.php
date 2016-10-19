@@ -21,7 +21,7 @@ class CreateVotesTable extends Migration
             $table->integer('post_id')->unsigned();
             $table->foreign('post_id')->references('id')->on('posts');
 
-            $table->boolean('vote');
+            $table->boolean('vote')->default(0);
             $table->timestamps();
         });
     }
