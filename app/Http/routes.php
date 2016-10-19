@@ -13,64 +13,40 @@ use App\Models\Post;
 |
 */
 
-// *********************** UPPERCASE ************************************************
-// Route::get('/uppercase/{word}', function ($word) {
-// 	$data['word'] = $word;
-// 	$data['upperCaseString'] = strtoupper($word);
-// 	return view('uppercase')->with($data);
-// });
-get('/uppercase/{word}', 'HomeController@uppercase');
+// Route::get('/', ['middleware'=>'auth'], function () {
+// 	return redirect()->action()
+// })
 
-// *********************** INCREMENT ************************************************
-// Route::get('/increment/{number}', function($number) {
-// 	$data['number'] = $number;
-// 	$data['incremented'] = $number + 1;
-// 	return view('increment')->with($data);
-// });
-get('/increment/{number}', 'HomeController@increment');
 
-// *********************** ROLL-DICE ************************************************
-// Route::get('/rolldice/{guess?}', function($guess = 1) {
-// 	$data['dice_roll'] = mt_rand(1, 6);
-// 	$data['guess'] = $guess;
-// 	$data['correct'] = $data["dice_roll"] == $data["guess"];
-// 	return view('roll-dice')->with($data);
-// });
 
-get('/rolldice/{guess}', 'HomeController@rollDice');
+
+
+// ****************** SEARCH ROUTE ****************************************************
+Route::get('posts/search', 'PostsController@search');
+
+// ****************** HOME ************************************************************
+
+Route::get('/', 'PostsController@index');
 
 // ****************** POSTS CONTROLLER ************************************************
 
 Route::resource('posts', 'PostsController');
 
-
-Route::get('orm-test', function ()
-{
-	$post1 = new \App\Models\Post();
-	$post1->title = 'Eloquent is awesome!';
-	$post1->url='https://laravel.com/docs/5.1/eloquent';
-	$post1->content  = 'It is super easy to create a new post.';
-	$post1->created_by = 1;
-	$post1->save();
-	
-	$post1 = new \App\Models\Post();
-	$post1->title = 'Eloquent is really easy!';
-	$post1->url='https://laravel.com/docs/5.1/eloquent';
-	$post1->content = 'It is super easy to create a new post.';
-	$post1->created_by = 1;
-	$post1->save();
-
-
-	$post = \App\Models\Post::find(1);
-	$post->delete();
-});
-
 // ****************** USERS CONTROLLER ************************************************
 
-Route::resource('user', 'UsersController');
+Route::resource('user', 'UsersController', ['except' => ['create', 'store']]);
+
+// ****************** AUTH ************************************************************
 
 
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 
-
-
+// ****************** VOTES *************************************************************

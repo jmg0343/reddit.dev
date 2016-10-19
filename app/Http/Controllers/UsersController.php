@@ -26,27 +26,7 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('users.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $user = new User;
-        $user->name = $request->get('name');
-        $user->email = $request->get('email');
-        $user->password = $request->get('password');
-        $user->save();
-
-        return redirect()->action('UsersController@index');
-    }
+  
 
     /**
      * Display the specified resource.
@@ -83,13 +63,29 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $rules = [
+            'name'   => 'required|min:5',
+            'email'     => 'required',
+            'password' => 'required',
+            'confirmPassword' => 'required|same:password',
+        ];
+
+        // will redirect back with $errors object populated if validation fails
+        $this->validate($request, $rules);
+        
+
+
+
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = bcrypt($request->password);
         $user->save();
 
-        return redirect()->action('UsersController@show', $post->id);
+        $request->session()->flash('SUCCESS_MESSAGE', 'Account info was saved successfully');
+
+        return redirect()->action('UsersController@show', $user->id);
     }
 
     /**
@@ -100,6 +96,18 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect()->action('UsersController@index');
     }
+
+
+
+
+     // return User::create([
+     //        'name' => $data['name'],
+     //        'email' => $data['email'],
+     //        'password' => bcrypt($data['password']),
+     //    ]);
 }
