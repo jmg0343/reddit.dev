@@ -51,5 +51,5 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 // ****************** VOTES *************************************************************
 
-Route::post('posts/show', 'PostsController@upVote');
-Route::post('posts/show', 'PostsController@downVote');
+Route::post('posts/show', 'PostsController@vote');
+// Route::post('posts/show', 'PostsController@downVote');

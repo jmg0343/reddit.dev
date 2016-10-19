@@ -162,7 +162,7 @@ class PostsController extends Controller
         return view('posts.results')->with($data);
     }
 
-    public function upVote(Request $request)
+    public function vote(Request $request)
     {
         $vote = Vote::firstOrCreate(
                 array(
@@ -170,21 +170,12 @@ class PostsController extends Controller
                         'post_id' => $request->get('postId'),
                     )
             );
-        $vote->vote = 1;
-        $vote->save();
-
-        return redirect()->action('PostsController@index');
-    }
-
-    public function downVote(Request $request)
-    {
-        $vote = Vote::firstOrCreate(
-                array(
-                        'user_id' => $request->user()->id,
-                        'post_id' => $request->get('postId'),
-                    )
-            );
-        $vote->vote = 0;
+        if ($request->get('voteValue') == 1){
+            $vote->vote = 1;
+        } else if ($request->get('voteValue') == 0){
+            $vote->vote = 0;
+        }
+        
         $vote->save();
 
         return redirect()->action('PostsController@index');

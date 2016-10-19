@@ -12,18 +12,20 @@
 					<div>
 						<p>{{ $post->content }}</p>	
 
-					<form method="POST" action="{{ action('PostsController@upVote') }}">
+					<form method="POST" action="{{ action('PostsController@vote') }}">
 						{!! csrf_field() !!}
 				        <div class="form-group">
 				          	<input type="hidden" name="postId" value="{{ $post->id }}">
+				          	<input type="hidden" name="voteValue" value="1">
 				        </div>
 				        <button type="submit" class="btn btn-default glyphicon glyphicon-thumbs-up"></button>
 					</form>	
-					
-					<form method="POST" action="{{ action('PostsController@downVote') }}">
+
+					<form method="POST" action="{{ action('PostsController@vote') }}">
 						{!! csrf_field() !!}
 				        <div class="form-group">
 				          	<input type="hidden" name="postId" value="{{ $post->id }}">
+				          	<input type="hidden" name="voteValue" value="0">
 				        </div>
 				        <button type="submit" class="btn btn-default glyphicon glyphicon-thumbs-down"></button>
 					</form>	
