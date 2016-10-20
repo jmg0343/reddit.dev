@@ -14,6 +14,26 @@ class Post extends BaseModel
 		return $this->belongsTo('App\User', 'created_by', 'id');
 	}
 
+	public function votes()
+	{
+		return $this->hasMany('App\Models\Vote');
+	}
+
+	public function upVotes()
+	{
+		return $this->votes()->where('vote', 1);
+	}
+
+	public function downVotes()
+	{
+		return $this->votes()->where('vote', 0);
+	}
+
+	public function voteScore()
+	{
+		return $this->upVotes()->count() - $this->downVotes()->count();
+	}
+
 	public static function search($searchTerm)
 	{
 		return self::where('title', 'LIKE', '%' . $searchTerm . '%')

@@ -20,7 +20,8 @@
 				        </div>
 				        <button type="submit" class="btn btn-default glyphicon glyphicon-thumbs-up"></button>
 					</form>	
-
+					{{-- <p>{{ $post->upVotes()->count() }}</p> --}}
+					<p>{{ $post->voteScore() }}</p>
 					<form method="POST" action="{{ action('PostsController@vote') }}">
 						{!! csrf_field() !!}
 				        <div class="form-group">

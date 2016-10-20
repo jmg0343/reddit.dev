@@ -103,6 +103,7 @@ class PostsController extends Controller
      */
     public function show($id)
     {
+        // $this->voteScore($id);
         $post = Post::findOrFail($id);
         $data = ['post' => $post];
         return view('posts.show')->with($data);
@@ -180,5 +181,16 @@ class PostsController extends Controller
 
         return redirect()->action('PostsController@index');
     }
+
+    // public function voteScore($id)
+    // {
+    //     // $post = Post::find(513);
+    //     $post = Post::find($id);
+    //     $data['post'] = $post;
+    //     $data['votes'] = Vote::voteScore($post);
+    //     dd($data['votes']);
+
+    //     return view('posts.show')->with($data);
+    // }
 
 }
